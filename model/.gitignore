@@ -1,0 +1,9 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# Windows system files
+desktop.ini
