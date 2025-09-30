@@ -2,16 +2,21 @@ from flask import Flask, request, jsonify,render_template
 from nlp_utils import generate_response
 import spacy
 import os
+import subprocess
+import sys
 
 app = Flask(__name__)
 chat_history = {}
 
-# Load spaCy model dynamically
+
+# Ensure the SpaCy small English model is installed
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
-    os.system("python -m spacy download en_core_web_sm")
+    # Model not found, download it
+    subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
     nlp = spacy.load("en_core_web_sm")
+
 
 @app.route("/")
 def home():
