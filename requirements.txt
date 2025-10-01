@@ -1,16 +1,25 @@
-Cython==3.1.4
+# Core libraries
 Flask==2.3.3
 gunicorn==21.2.0
-joblib==1.5.2
-numpy==1.26.4
-openai==1.109.1
 requests==2.32.5
-scikit-learn==1.5.1
+
+# Machine learning / NLP
+numpy==1.26.4
 scipy==1.15.3
+scikit-learn==1.5.1
+
+# SpaCy with compatible blis
 spacy==3.5.4
+blis==0.7.9
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
-urllib3==2.5.0
+
+# Utilities
+Cython==3.1.4
+joblib==1.5.2
+openai==1.109.1
+
+# Packaging helpers
 setuptools>=42
 wheel
-blis==0.7.9
+urllib3==2.5.0
