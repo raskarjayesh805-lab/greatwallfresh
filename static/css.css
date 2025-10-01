@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+}
+
+h1 {
+    color:#2c3e50;
+    margin-bottom:20px;
+}
+
+#chat-container {
+    width: 600px;
+    height: 600px;
+    background: #fdfcf8 url("https://upload.wikimedia.org/wikipedia/commons/1/10/Great_Wall_of_China_July_2006.JPG") no-repeat center/cover;
+    border: 8px solid #b88b4a;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#chat {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.8);
+}
+
+.user-msg {
+    text-align: right;
+    color: #34495e;
+    margin: 5px 0;
+    padding: 8px 12px;
+    background: #d1f0ff;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 75%;
+}
+
+.bot-msg {
+    text-align: left;
+    color: #2c3e50;
+    margin: 5px 0;
+    padding: 8px 12px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 75%;
+}
+
+#input-container {
+    display: flex;
+    padding: 10px;
+    background: #fff;
+}
+
+#userInput {
+    flex: 1;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 18px;
+    margin-left: 5px;
+    border: none;
+    background: #2ecc71;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #27ae60;
+}

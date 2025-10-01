@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GreatWall Chatbot</title>
-    <style>
-        body { font-family: Arial; margin: 20px; }
-        #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
-        #userInput { width: 80%; padding: 5px; }
-        button { padding: 5px 10px; }
-    </style>
+    <meta charset="UTF-8">
+    <title>GreatWall Chatbot 🛡</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>GreatWall Chatbot 🛡</h1>
-    <div id="chat"></div>
-    <input type="text" id="userInput" placeholder="Type a message">
-    <button onclick="sendMessage()">Send</button>
+    <div id="chat-container">
+        <div id="chat"></div>
+        <div id="input-container">
+            <input type="text" id="userInput" placeholder="Type a message or URL...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
 
-    <!-- Link to JS -->
-    <script src="chat.js"></script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
 </body>
 </html>
