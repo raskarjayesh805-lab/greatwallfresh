@@ -7,9 +7,10 @@ openai==1.109.1
 requests==2.32.5
 scikit-learn==1.5.1
 scipy==1.15.3
-spacy==3.7.5
+spacy==3.5.4
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 urllib3==2.5.0
 setuptools>=42
 wheel
+blis==0.7.9
