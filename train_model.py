@@ -44,6 +44,30 @@ labels = [
 ]
 
 # -----------------------------
+# Add 500 dummy URLs (250 safe, 250 suspicious)
+for i in range(1, 251):
+    urls.append(f"https://secure-site{i}.com")
+    labels.append(0)
+
+for i in range(1, 251):
+    if i % 5 == 0:
+        urls.append(f"http://login-secure{i}.info")
+    elif i % 5 == 1:
+        urls.append(f"http://verify-account{i}.net")
+    elif i % 5 == 2:
+        urls.append(f"http://paypal-secure{i}.xyz")
+    elif i % 5 == 3:
+        urls.append(f"http://bank-verify{i}.site")
+    else:
+        urls.append(f"http://free-gift{i}.ru")
+    labels.append(1)
+
+# -----------------------------
+# Rule: http:// is always unsafe
+def is_http_unsafe(url: str) -> bool:
+    return url.lower().startswith("http://")
+
+# -----------------------------
 # Feature extraction
 def extract_features(url: str) -> dict:
     url_lower = url.lower()
@@ -67,9 +91,14 @@ def extract_features(url: str) -> dict:
     return features
 
 # -----------------------------
-# Prepare dataset
-X = [list(extract_features(url).values()) for url in urls]
-y = labels
+# Prepare dataset (apply http:// rule)
+X, y = [], []
+for url, label in zip(urls, labels):
+    if is_http_unsafe(url):
+        y.append(1)  # force as unsafe
+    else:
+        y.append(label)
+    X.append(list(extract_features(url).values()))
 
 # -----------------------------
 # Train RandomForestClassifier
@@ -84,3 +113,23 @@ print("✅ Model trained and saved!")
 # Save whitelist separately
 joblib.dump(WHITELIST_SAFE, "model/url_whitelist.joblib")
 print("✅ Whitelist saved!")
+
+# -----------------------------
+# Example runtime check
+def check_url_runtime(url: str):
+    if is_http_unsafe(url):
+        return "⚠️ This site is unsafe because it uses HTTP (not HTTPS)."
+    features = [list(extract_features(url).values())]
+    prediction = clf.predict(features)[0]
+    return "✅ This site looks safe." if prediction == 0 else "🚨 Warning! This site looks suspicious."
+
+
+# Example test
+if __name__ == "__main__":
+    test_urls = [
+        "http://fakebank.com",
+        "https://googlepay.com",
+        "https://unknown-site123.net"
+    ]
+    for t in test_urls:
+        print(t, "->", check_url_runtime(t))
