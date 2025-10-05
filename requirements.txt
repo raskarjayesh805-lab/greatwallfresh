@@ -13,3 +13,4 @@ spacy-loggers==1.0.5
 urllib3==2.5.0
 setuptools>=42
 wheel
+blis==0.7.10
