@@ -1,9 +1,50 @@
-# Python cache files
+
+# Python
+__pycache__/
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+venv
+
+# Environment variables
+.env
+*.env
+
+# Logs
+*.log
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build / Distribution
+build/
+dist/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+.venv/
+# Python
 __pycache__/
 *.pyc
-
-# Environment files
+.venv/
 .env
+# VS Code
+.vscode/
 
-# Windows system files
+# Windows metadata
+Thumbs.db
 desktop.ini
+ehthumbs.db
+
+
