@@ -2,9 +2,20 @@ from flask import Flask, request, jsonify, render_template
 import os
 import random
 import re
+import spacy
 
 app = Flask(__name__)
 chat_history = {}
+
+# ---------------------------
+# NLP setup with spaCy
+# ---------------------------
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    from spacy.cli import download
+    download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 # ---------------------------
 # Greeting + response sets
@@ -48,10 +59,16 @@ def score_url(url: str) -> dict:
     reasons = []
     url_lower = url.lower()
 
+    # Detect suspicious keywords
     suspicious_keywords = ["login", "verify", "update", "secure", "bank", "paypal"]
     if any(word in url_lower for word in suspicious_keywords):
         score -= 30
         reasons.append("Contains suspicious keyword")
+
+    # Penalize for using HTTP
+    if url_lower.startswith("http://"):
+        score -= 50
+        reasons.append("Uses HTTP instead of HTTPS (insecure connection)")
 
     # Clamp score between 0 and 100
     score = max(0, min(100, score))
@@ -89,10 +106,13 @@ def chat():
 
     chat_history[user_id].append({"role": "user", "text": user_message})
 
+    # NLP preprocessing (optional sentiment or token usage)
+    doc = nlp(user_message.lower())
+
     # Decide response
     if any(greet in user_message.lower() for greet in GREETINGS):
         bot_reply = get_greeting_response()
-    elif user_message.startswith("http"):
+    elif re.match(r"^https?://", user_message.lower()):
         result = score_url(user_message)
         if result["label"] == "safe":
             bot_reply = get_safe_response()
