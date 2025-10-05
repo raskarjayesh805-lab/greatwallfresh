@@ -6,12 +6,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>GreatWall Chatbot 🛡</h1>
-    <div id="chat-container">
-        <div id="chat"></div>
+    <!-- CHAT WRAPPER -->
+    <div class="chat-wrapper">
+        <!-- HEADER -->
+        <header>GreatWall Chatbot 🛡</header>
+
+        <!-- CHAT AREA -->
+        <div id="chat-container">
+            <div id="chat"></div>
+        </div>
+
+        <!-- INPUT AREA -->
         <div id="input-container">
             <input type="text" id="userInput" placeholder="Type a message or URL...">
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="sendMessage()">➤</button>
         </div>
     </div>
 

@@ -31,15 +31,15 @@ GREETING_RESPONSES = [
 ]
 
 SAFE_RESPONSES = [
-    "This URL seems safe ✅",
-    "All clear! You can visit this website.",
-    "No threats detected for this link.",
+    "It seems completely safe ✅. You can continue browsing with confidence.",
+    "All clear! This site doesn’t show any immediate risks.",
+    "No threats detected for this link. Keep your browsing habits safe!"
 ]
 
 SUSPICIOUS_RESPONSES = [
-    "⚠ This URL looks suspicious, be careful!",
-    "Hmm, this one might be fake. Double-check before visiting.",
-    "Warning! This website may not be secure.",
+    "⚠ Be cautious! This URL might be malicious or deceptive.",
+    "Hmm, this link looks suspicious. Consider double-checking before visiting.",
+    "Warning! This website may not be secure. Stay alert!"
 ]
 
 def get_greeting_response():
@@ -111,16 +111,20 @@ def chat():
 
     # Decide response
     if any(greet in user_message.lower() for greet in GREETINGS):
-        bot_reply = get_greeting_response()
+        bot_reply = get_greeting_response() + " 😊 How can I assist you today? You can send me any URL to check its safety."
     elif re.match(r"^https?://", user_message.lower()):
-        result = score_url(user_message)
+        url = user_message
+        result = score_url(url)
         if result["label"] == "safe":
-            bot_reply = get_safe_response()
+            bot_reply = f"✅ The URL '{url}' looks safe. {get_safe_response()} Your browsing is secure!"
         else:
-            bot_reply = get_suspicious_response()
-        bot_reply += f" (Score: {result['score']}, Reason: {', '.join(result['reasons'])})"
+            bot_reply = f"⚠️ Attention! The URL '{url}' seems {result['label']}. Reasons: {', '.join(result['reasons'])}. Be careful before visiting this link!"
     else:
-        bot_reply = "I can check URLs or chat with you. Try sending a link!"
+        bot_reply = (
+            "I can help you check if a URL is safe or suspicious. "
+            "Try sending me a link like 'https://example.com', or you can chat with me about online security tips! "
+            "I can provide guidance and advice to keep you safe online."
+        )
 
     chat_history[user_id].append({"role": "bot", "text": bot_reply})
 

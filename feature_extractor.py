@@ -1,9 +1,20 @@
 # feature_extractor.py
 import re
 from urllib.parse import urlparse
-from nlp_utils import preprocess_text
+
+def preprocess_text(text: str):
+    """Simple tokenizer / cleaner for URL or text"""
+    if not text:
+        return []
+    text = text.replace("\u00A0", " ").strip().lower()
+    tokens = re.findall(r"\w+", text)
+    return tokens
 
 def extract_features(url: str) -> dict:
+    """
+    Extract features from a URL for ML or rule-based scoring.
+    Includes token count, URL length, subdomains, HTTPS, etc.
+    """
     parsed = urlparse(url)
     hostname = parsed.netloc
 
@@ -13,6 +24,7 @@ def extract_features(url: str) -> dict:
         "num_digits": sum(c.isdigit() for c in url),
         "num_special_chars": len(re.findall(r'\W', url)),
         "num_subdomains": hostname.count('.') if hostname else 0,
+        "num_hyphens": url.count('-'),
         "has_https": 1 if parsed.scheme == 'https' else 0
     }
 
